@@ -38,19 +38,25 @@ SELECT DISTINCT sz.N FROM sz, sz sz2 WHERE sz.N = sz2.N AND sz.GY <> sz2.GY;
 ```
 (9.)  Kik szeretnek legalább háromféle gyümölcsöt?
 ``` sql
-SELECT DISTINCT sz.N FROM sz, sz sz2, sz sz3 WHERE sz.N = sz3.N AND sz2.N = sz3.N AND sz.N = sz2.N AND sz.GY <> sz2.GY AND sz2.GY <> sz3.GY AND sz.GY <> sz3.GY;
+SELECT DISTINCT sz.N FROM sz, sz sz2, sz sz3
+WHERE   sz.N = sz3.N AND sz2.N = sz3.N AND sz.N = sz2.N 
+        AND sz.GY <> sz2.GY AND sz2.GY <> sz3.GY AND sz.GY <> sz3.GY;
 ```
 (10.) Kik szeretnek legfeljebb kétféle gyümölcsöt?
 ``` sql
 SELECT DISTINCT sz.N FROM sz
 MINUS
-SELECT DISTINCT sz.N FROM sz, sz sz2, sz sz3 WHERE sz.N = sz3.N AND sz2.N = sz3.N AND sz.N = sz2.N AND sz.GY <> sz2.GY AND sz2.GY <> sz3.GY AND sz.GY <> sz3.GY;
+SELECT DISTINCT sz.N FROM sz, sz sz2, sz sz3
+WHERE   sz.N = sz3.N AND sz2.N = sz3.N AND sz.N = sz2.N
+        AND sz.GY <> sz2.GY AND sz2.GY <> sz3.GY AND sz.GY <> sz3.GY;
 ```
 (11.) Kik szeretnek pontosan kétféle gyümölcsöt?
 ``` sql
 SELECT DISTINCT sz.N FROM sz, sz sz2 WHERE sz.N = sz2.N AND sz.GY <> sz2.GY
 MINUS
-SELECT DISTINCT sz.N FROM sz, sz sz2, sz sz3 WHERE sz.N = sz3.N AND sz2.N = sz3.N AND sz.N = sz2.N AND sz.GY <> sz2.GY AND sz2.GY <> sz3.GY AND sz.GY <> sz3.GY;
+SELECT DISTINCT sz.N FROM sz, sz sz2, sz sz3
+WHERE   sz.N = sz3.N AND sz2.N = sz3.N AND sz.N = sz2.N
+        AND sz.GY <> sz2.GY AND sz2.GY <> sz3.GY AND sz.GY <> sz3.GY;
 ```
 (12.) Kik szeretnek minden gyümölcsöt?
 (13.) Kik azok, akik legalább azokat a gyümölcsöket szeretik, mint Micimackó?
