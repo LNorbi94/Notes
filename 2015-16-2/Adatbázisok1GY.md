@@ -18,7 +18,7 @@ SELECT N FROM sz WHERE GY = 'alma';
 ```
 (4.)  Kik nem szeretik a körtét? (de valami mást igen)
 ``` sql
-SELECT DISTINCT N FROM sz WHERE GY != 'körte';
+SELECT DISTINCT N FROM sz MINUS SELECT DISTINCT N FROM sz WHERE GY = 'körte';
 ```
 (5.)  Kik szeretik vagy az almát vagy a körtét?
 ``` sql
