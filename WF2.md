@@ -1,3 +1,40 @@
+Web-fejlesztés 2.
+===
+
+2016. 02. 10.
+---
+
+Vezérlési szerkezetek hasonlóan C++-hoz:
+``` javascript
+	if(condition)
+	{ } else if(..) ...
+	
+	while(condition)
+	{ }
+	
+	for(var i = 0; i < n; ++i)
+	{ }
+	
+	// Object
+	for(var i of array)
+	{ }
+	
+	// Index
+	for(var i in array)
+	{ }
+```
+
+Gyengén típusos nyelv:
+``` javascript
+	var i = 0;
+	i = "almafa";
+```
+
+Műveletek kiértékelése lvalue-tól függ:
+``` javascript
+	var a = "0";
+	a += 1; // = 01
+```
 01
 ====
 
