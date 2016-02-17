@@ -11,10 +11,11 @@ Adatbázisok 1. Gyakorlat
 SELECT GY FROM SZ WHERE N = 'Micimackó';
 ```
 (2.)  Melyek azok a gyümölcsök, amelyeket Micimackó nem szeret? (de valaki más igen)
+(SQL szabvány szerint EXCEPT)
 ``` sql
-SELECT DISTINCT GY FROM SZ WHERE N != 'Micimackó'
+SELECT GY FROM SZ
 MINUS
-SELECT DISTINCT GY FROM SZ WHERE N = 'Micimackó';
+SELECT GY FROM SZ WHERE N = 'Micimackó';
 ```
 (3.)  Kik szeretik az almát?
 ``` sql
@@ -22,9 +23,9 @@ SELECT N FROM SZ WHERE GY = 'alma';
 ```
 (4.)  Kik nem szeretik a körtét? (de valami mást igen)
 ``` sql
-SELECT DISTINCT N FROM SZ
+SELECT N FROM SZ
 MINUS
-SELECT DISTINCT N FROM SZ WHERE GY = 'körte';
+SELECT N FROM SZ WHERE GY = 'körte';
 ```
 (5.)  Kik szeretik vagy az almát vagy a körtét?
 ``` sql
@@ -75,8 +76,27 @@ MINUS
 SELECT DISTINCT n FROM (SELECT * FROM (SELECT n FROM sz), (SELECT gy FROM sz) MINUS SELECT * FROM sz);
 ```
 (13.) Kik azok, akik legalább azokat a gyümölcsöket szeretik, mint Micimackó?
+(osztás)
+``` sql
+SELECT N FROM SZ
+MINUS
+SELECT N FROM (
+SELECT * FROM (SELECT N FROM SZ), (SELECT GY FROM SZ WHERE N = 'Micimackó') 
+MINUS
+SELECT * FROM SZ);
+```
 (14.) Kik azok, akik legfeljebb azokat a gyümölcsöket szeretik, mint Micimackó?
+``` sql
+SELECT N FROM SZ
+MINUS
+SELECT N FROM (
+SELECT * FROM SZ
+MINUS
+SELECT * FROM (SELECT N FROM SZ), (SELECT GY FROM SZ WHERE N = 'Micimackó') );
+
+```
 (15.) Kik azok, akik pontosan azokat a gyümölcsöket szeretik, mint Micimackó?
+(13) metszet (14)
 (16.) Melyek azok a (név, név) párok, akiknek legalább egy gyümölcsben eltér az ízlésük, azaz az  egyik szereti ezt a gyümölcsöt, a másik meg nem?
 (17.) Melyek azok a (név, név) párok, akiknek pontosan ugyanaz az ízlésük, azaz pontosan  ugyanazokat a gyümölcsöket szeretik? 
 (18.) SZERET(NEV, GYUMOLCS) tábla helyett EVETT(NEV, KG) legyen a relációséma és azt tartalmazza, hogy ki mennyi gyümölcsöt evett összesen. Ki ette a legtöbb gyümölcsöt? 
@@ -90,7 +110,7 @@ SELECT DISTINCT n FROM (SELECT * FROM (SELECT n FROM sz), (SELECT gy FROM sz) MI
 >         Csaták(csatanév, dátum), 
 >         Kimenetelek(hajónév, csatanév, eredmény).
 
-(21.) Melyek azok a hajók, amelyeket 1921 elõtt avattak fel?
+(1.) Melyek azok a hajók, amelyeket 1921 elõtt avattak fel?
 2.    Adjuk meg azokat a hajóosztályokat a gyártó országok nevével együtt, amelyeknek az ágyúi legalább 16-os kaliberûek.
 3.    Adjuk meg a Denmark Strait-csatában elsüllyedt hajók nevét.
 4.    Adjuk meg az adatbázisban szereplõ összes hadihajó nevét. (Ne feledjük, hogy a Hajók relációban nem feltétlenül szerepel az összes hajó!)
@@ -105,3 +125,23 @@ SELECT DISTINCT n FROM (SELECT * FROM (SELECT n FROM sz), (SELECT gy FROM sz) MI
 13.    Adjuk meg azokat az osztályokat, amelyekbe csak egyetlenegy hajó tartozik.
 14.    Évenkénti bontásban hány hajót avattak?
 15.    Mely hajóosztályból mikor avatták az utolsó hajót?
+
+2016. 02. 17.
+---
+
+#### R <> S (natural join) ####
+---
+Két tábla közül megkeresi azonos oszlopokat, és ha minden komponense megegyezik, összekapcsolja azt.
+
+Sémája:
+- Relációs Algebra esetén egymás után fűzi. pl: R(A, B, C), S(B, D) esetén (A, B, C, D) lesz.
+- SQL esetén először a közöseket szedi ki, majd a többit. Fenti példa esetén ez (B, A, C, D) lesz.
+
+#### R <>C S (théta join) ####
+---
+C feltétel alapján összekapcsolja a táblákat.
+- Másképp: R és S szorzata, majd C feltétellel szűrés
+
+#### Osztás ####
+---
+Nincs SQL-ben.
