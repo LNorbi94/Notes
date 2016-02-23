@@ -168,3 +168,9 @@ Belső tartalom elérése:
 ``` javascript
 	elem.innerHTML = "Hello World"; // where, for instance, elem is a <p> element.
 ```
+
+## 2016. február 24. ##
+
+* Események megadása esetén hozzárendelhetünk egy függvényt több objektumhoz, ebben az esetben this-ként hivatkozhatunk rájuk.
+* Egy argumentum használatával a függvényben elérhetjük az eseményt kíváltó környezet tulajdonságait. (pl.: shift-et nyomott-e felhasználó linkre kattintásnál)
+* Eseményeket lehet burkolni. (pl.: ul id-ra eventlistenert rakni, majd beállítani hogy csak az a tagű elemeire hívódjon meg az esemény.)
