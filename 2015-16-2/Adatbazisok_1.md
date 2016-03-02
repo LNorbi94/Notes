@@ -93,7 +93,6 @@ SELECT N FROM (
 SELECT * FROM SZ
 MINUS
 SELECT * FROM (SELECT N FROM SZ), (SELECT GY FROM SZ WHERE N = 'Micimackó') );
-
 ```
 (15.) Kik azok, akik pontosan azokat a gyümölcsöket szeretik, mint Micimackó?
 (13) metszet (14)
@@ -111,20 +110,62 @@ SELECT * FROM (SELECT N FROM SZ), (SELECT GY FROM SZ WHERE N = 'Micimackó') );
 >         Kimenetelek(hajónév, csatanév, eredmény).
 
 (1.) Melyek azok a hajók, amelyeket 1921 elõtt avattak fel?
-2.    Adjuk meg azokat a hajóosztályokat a gyártó országok nevével együtt, amelyeknek az ágyúi legalább 16-os kaliberûek.
-3.    Adjuk meg a Denmark Strait-csatában elsüllyedt hajók nevét.
-4.    Adjuk meg az adatbázisban szereplõ összes hadihajó nevét. (Ne feledjük, hogy a Hajók relációban nem feltétlenül szerepel az összes hajó!)
-5.    Melyek azok az országok, amelyeknek csatahajóik is és cirkálóhajóik is voltak?
-6.    Melyik hajó melyik országban készült?
-7.    Adjuk meg a Guadalcanal csatában részt vett hajók nevét, vízkiszorítását és ágyúi­nak a számát.
-8.    Soroljuk fel a biztosan 1943 elõtt épült hajókat!
-9.    Melyik csatában volt mindenféle eredmény?
-10.   Melyik években avattak legalább 3 hajót?
-11.    Az 1921-es washingtoni egyezmény betiltotta a 35 000 tonnánál súlyosabb hajókat. Adjuk meg azokat a hajókat, amelyek megszegték az egyezményt.
-12.    Adjuk meg azokat a hajókat, amelyek "újjáéledtek", azaz egyszer már megsérültek egy csatában, de egy késõbbi csatában újra harcoltak.
-13.    Adjuk meg azokat az osztályokat, amelyekbe csak egyetlenegy hajó tartozik.
-14.    Évenkénti bontásban hány hajót avattak?
-15.    Mely hajóosztályból mikor avatták az utolsó hajót?
+(2.)    Adjuk meg azokat a hajóosztályokat a gyártó országok nevével együtt, amelyeknek az ágyúi legalább 16-os kaliberûek.
+(3.)    Adjuk meg a Denmark Strait-csatában elsüllyedt hajók nevét.
+(4.)    Adjuk meg az adatbázisban szereplõ összes hadihajó nevét. (Ne feledjük, hogy a Hajók relációban nem feltétlenül szerepel az összes hajó!)
+(5.)    Melyek azok az országok, amelyeknek csatahajóik is és cirkálóhajóik is voltak?
+(6.)    Melyik hajó melyik országban készült?
+(7.)    Adjuk meg a Guadalcanal csatában részt vett hajók nevét, vízkiszorítását és ágyúinak a számát.
+``` sql
+SELECT hajónév, ágyúkszáma, vízkiszorítás
+FROM hajóosztályok natural join hajók natural join kimenetelek
+WHERE  csatanév='Guadalcanal';
+```
+(8.)    Soroljuk fel a biztosan 1943 elõtt épült hajókat!
+``` sql
+SELECT hajónév FROM hajók WHERE felavatva < '01/01/43'
+UNION
+SELECT hajónév FROM ( SELECT * FROM csaták WHERE datum < '01/01/43' ) natural join kimenetelek;
+```
+(9.)    Melyik csatában volt mindenféle eredmény?
+``` sql
+SELECT csatanév FROM kimenetelek
+MINUS
+(SELECT csatanév FROM (SELECT csatanév FROM kimenetelek), (SELECT eredmény FROM kimenetelek)
+MINUS
+SELECT csatanév, eredmény FROM kimenetelek);
+```
+(10.)   Melyik években avattak legalább 3 hajót?
+``` sql
+ SELECT DISTINCT h1.felavatva FROM
+ ( SELECT * FROM hajók h1, hajók h2, hajók h3 WHERE
+ h1.felavatva = h2.felavatva AND h2.felavatva = h3.felavatva AND
+ h1.hajónév != h2.hajónév AND h2.hajónév != h3.hajónév AND h1.hajónév != h3.hajónév );
+```
+(11.)    Az 1921-es washingtoni egyezmény betiltotta a 35 000 tonnánál súlyosabb hajókat. Adjuk meg azokat a hajókat, amelyek megszegték az egyezményt.
+``` sql
+SELECT hajónév FROM hajók NATURAL JOIN hajóosztályok WHERE vízkiszorítás > 35000 AND felavatva > 1921;
+```
+> külön leszűrni gyorsabb
+
+(12.)    Adjuk meg azokat a hajókat, amelyek "újjáéledtek", azaz egyszer már megsérültek egy csatában, de egy késõbbi csatában újra harcoltak.
+``` sql
+SELECT a.hajónév
+FROM ( SELECT * FROM kimenetelek NATURAL JOIN csaták) a, ( SELECT * FROM kimenetelek NATURAL JOIN csaták) b
+WHERE lower(a.eredmény) != 'ok' and a.dátum < b.dátum and a.hajónév = b.hajónév;
+```
+(13.)    Adjuk meg azokat az osztályokat, amelyekbe csak egyetlenegy hajó tartozik.
+``` sql
+
+```
+(14.)    Évenkénti bontásban hány hajót avattak?
+``` sql
+
+```
+(15.)    Mely hajóosztályból mikor avatták az utolsó hajót?
+``` sql
+
+```
 
 2016. 02. 17.
 ---
