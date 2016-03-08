@@ -95,7 +95,21 @@ MINUS
 SELECT * FROM (SELECT N FROM SZ), (SELECT GY FROM SZ WHERE N = 'Micimackó') );
 ```
 (15.) Kik azok, akik pontosan azokat a gyümölcsöket szeretik, mint Micimackó?
-(13) metszet (14)
+``` sql
+SELECT N FROM SZ
+MINUS
+SELECT N FROM (
+SELECT * FROM (SELECT N FROM SZ), (SELECT GY FROM SZ WHERE N = 'Micimackó') 
+MINUS
+SELECT * FROM SZ)
+INTERSECT
+(SELECT N FROM SZ
+MINUS
+SELECT N FROM (
+SELECT * FROM SZ
+MINUS
+SELECT * FROM (SELECT N FROM SZ), (SELECT GY FROM SZ WHERE N = 'Micimackó') ));
+```
 (16.) Melyek azok a (név, név) párok, akiknek legalább egy gyümölcsben eltér az ízlésük, azaz az  egyik szereti ezt a gyümölcsöt, a másik meg nem?
 (17.) Melyek azok a (név, név) párok, akiknek pontosan ugyanaz az ízlésük, azaz pontosan  ugyanazokat a gyümölcsöket szeretik? 
 (18.) SZERET(NEV, GYUMOLCS) tábla helyett EVETT(NEV, KG) legyen a relációséma és azt tartalmazza, hogy ki mennyi gyümölcsöt evett összesen. Ki ette a legtöbb gyümölcsöt? 
