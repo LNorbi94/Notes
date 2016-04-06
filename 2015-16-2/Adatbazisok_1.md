@@ -200,3 +200,35 @@ C feltétel alapján összekapcsolja a táblákat.
 #### Osztás ####
 ---
 Nincs SQL-ben.
+
+2016. 04. 06.
+===
+
+Insert
+---
+``` sql
+        INSERT INTO táblanév [(mezőlista)] 
+        -> VALUES (kif. lista);
+        -> lekérdezés;
+```
+
+* Ha nincs érték megadva valamelyik oszlophoz: default érték. Ha nincs default -> null.
+* Ha bármi (akár null) meg van adva, akkor az lesz az értéke. (Kivéve ha constraintet sért)
+* Lekérdezésnél bármit lehet, de annyi oszlopos lekérdezésnek kell lennie mint amennyit meg akarunk adni.
+
+Update
+---
+``` sql
+        UPDATE táblanév SET (mezőnév=érték)+ [WHERE feltétel];
+```
+
+Delete
+---
+``` sql
+        DELETE táblanév [WHERE feltétel];
+```
+
+Drop table
+---
+* Commitol végrehajtás után.
+
