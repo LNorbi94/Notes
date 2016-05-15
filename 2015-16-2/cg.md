@@ -1,5 +1,5 @@
 7. előadás
-------------------
+----------
 
 ###### Inkrementális képszintézis, kapcsolódó fogalmak, és sugárkövetéssel összehasonlítás
 -------------------------------------------------------------------------------------------
@@ -108,3 +108,68 @@ Legyen h > 0, és ekkor (x, y, z) -1 és 1 között van => (hx, hy, hz) -h és h
 ###### Goaraud árnyalás, Phong árnyalás rövid leírása, összehasonlítása
 -----------------------------------------------------------------------
 - Ez... az előző feladat? De akkor gondolom ez külön kell.
+
+8. előadás
+----------
+
+###### Pont egyenesre vágásakor mikor tartjuk meg a pontot, mítől függ?
+-------------------------------------------------------------------------
+- Ha a pont az egyenes normálisával egy irányban fekszik.
+
+###### Pont egyenesre vágásakor az egyenes normálvektoros alakját használó módszer hány összeadás/kivonást illetve szorzást végez. A homogén alakot használó? Vektorműveleteket nézve műveletigény?
+-----------------------------------------------------------------------
+- \<p - p0, n> >=0 <=> (px - p0x) * nx + (py - p0y) * ny >= 0
+  * 3 db +/-, 2 db *.
+  * Vektorműveletek: 1 db +/-, 1 db *.
+- e = [e1, e2, e3], e1^2 + e2^2 + e3^2 = 1, p = [p1, p2, p3] : e * p >=0 <=> e1p1 + e2p2 + e3p3 >= 0
+  * 2 db +/-, 3 db *.
+  * Vektorműveletek: 1 db *.
+
+###### Térben megadható-e egy egyenes egy pontjával és normálvektorával?
+------------------------------------------------------------------------
+- Nem, csak síkban.
+
+###### Pont síkra vágásakor mit mondhatunk a normálvektoros és homogén alakot felhasználó módszerek skalár, illetve vektor műveletigényeiről?
+-------------------
+- \<q - p, n> >= 0 <=> (qx - px) * nx + (qy - py) * ny + (qz - pz) * nz >= 0
+  * 5 db +/-, 3 db *.
+  * 1 db +/-, 1 db *.
+- e * q >= 0 <=> e1q1 + e2q2 + e3q3 + e4q4 >= 0
+  * 3 db +/-, 4 db *.
+  * 1 db *.
+
+###### Szakasz egyenesre vágásakor a végpontok és a vágóegyenes szempontjából milyen esetek vannak? Mi van, ha az egyik végpontja a szakasznak a vágóegyenesre esik?
+--------------------------------------------
+- Ha a szakasz egyik végpontja a vágóegyenesre esik, akkor megtartjuk.
+
+1. Ha a szakasz mindkét végpontja az egyenes normálisával egy irányban fekszik, akkor megtartjuk a pontot.
+2. Ha a szakasz egyik végpontja sem esik egy irányba az egyenes normálisával, akkor nem tartjuk meg a szakaszt.
+3. Ha a szakasz A végpontja igen, de a B nem esik egy irányba az egyenes normálisával, akkor a vágóegyenes és a szakasz metészpontjától az A végpontig megtartjuk a szakaszt, a metszésponttól a B végpontig eldobjuk.
+
+###### Legyen p = (4, 2), q = (9, -5). Mik lesznek a vágott szakasz p', q' végpontjai, ha az egyenes egyenlete, amelyre a vágást végezzük y = -1 = ymax (tőle "felfelé" eső pontokat vágjuk ki)? Mi lesz p'', q'', ha az előbbi után az y = -4 = ymin egyenessel is vágunk (egyenes alatt lévő pontok)?
+- p' = (37/7, -1), q' = (9, -5)
+- p'' = (45/7, -4), q'' = (9, -5)
+- x(t) = x1 + (x2 - x1)t
+- y(t) = y1 + (y2 - y1)t
+- Pl. y_min adott => -1 = y1 + (y2 - y1)t
+- Másik koordináta kijön belőle.
+
+###### Következő Cohen-Sutherland kódú pontpárok közül melyek azonosítanak olyan szakaszokat amelyek biztosan a vágó ablakon kívűl lesznek? (0101, 0110), (1001, 0010), (0100, 0001), (1000, 0000), (0000, 0000).
+------------------------------------------------------------------------------------
+- (0101, 0110)
+- Top, Bottom, Right, Left
+
+1001 | 1000 | 1010
+---- | ---- | ----
+0001 | 0000 | 0010
+0101 | 0100 | 0110
+
+###### Háromszög három pontja: (4, 4), (14, 14), (-6, 24). Az x = 0, y = 0, x = 10, y = 10 egyenesekre vágva sorra, a hozzájuk tartozó n = (1, 0), n = (0, 1), n = (-1, 0), n = (0, -1) normálisok által meghatározott félsíkban megtartva a pontokat, mi lesznek a háromszög vágása után keletkező poligon csúcspontjainak koordinátái? (S-H)
+------------------------------------------------------------------------------------
+- ?
+
+###### A Bresenham szakaszrajzoló algoritmusra teljesül-e, hogy a szakasz kezdő- és végpontját is visszaadja (beszínezi)?
+- Igen.
+
+###### Szükséges-e a Bresenham algoritmushoz lebegőpontos műveletek elvégzése?
+- Nem, egészekkel számol.
