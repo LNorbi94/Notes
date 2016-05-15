@@ -44,9 +44,9 @@ sok pixel/sugár miatt nagy számítási igény  | koherencia miatt kissebb szá
 
 ###### Transzformációk grafikus szerelőszalag kapcsán
 ------------------------------------------------------
-- Modellezési (világ) transzformáció: a saját (modell) KR-ben adott modelleket a világ KR-ben helyezi el. Tipikusan minden modellre különböző, affin transzformáció. Gyakorlatban: world / model mátrix.
-- Nézeti (kamera) transzformáció: a világ KR-t a kamerához rögzített KR-be viszi át. A transzformáció a kamera tulajdonságaiból adódik (eye, center, up). Gyakorlatban: view / camera mátrix.
-- Projektív transzformáció: normalizálja a látógúlát, hogy mindkét nyílásszöge π / 2 legyen.
+- **Modellezési (világ) transzformáció:** a saját (modell) KR-ben adott modelleket a világ KR-ben helyezi el. Tipikusan minden modellre különböző, affin transzformáció. Gyakorlatban: world / model mátrix.
+- **Nézeti (kamera) transzformáció:** a világ KR-t a kamerához rögzített KR-be viszi át. A transzformáció a kamera tulajdonságaiból adódik (eye, center, up). Gyakorlatban: view / camera mátrix.
+- **Projektív transzformáció:** normalizálja a látógúlát, hogy mindkét nyílásszöge π / 2 legyen.
 
 ###### Mi az origó középpontú, attól a Z tengely mentén d egységre lévő XY síkkal párhuzamos vetítési síkra vetítő középpontos vetítés mátrixa?
 ----------------
