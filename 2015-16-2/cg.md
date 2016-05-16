@@ -147,6 +147,7 @@ Legyen h > 0, és ekkor (x, y, z) -1 és 1 között van => (hx, hy, hz) -h és h
 3. Ha a szakasz A végpontja igen, de a B nem esik egy irányba az egyenes normálisával, akkor a vágóegyenes és a szakasz metészpontjától az A végpontig megtartjuk a szakaszt, a metszésponttól a B végpontig eldobjuk.
 
 ###### Legyen p = (4, 2), q = (9, -5). Mik lesznek a vágott szakasz p', q' végpontjai, ha az egyenes egyenlete, amelyre a vágást végezzük y = -1 = ymax (tőle "felfelé" eső pontokat vágjuk ki)? Mi lesz p'', q'', ha az előbbi után az y = -4 = ymin egyenessel is vágunk (egyenes alatt lévő pontok)?
+-------------------------------------------------
 - p' = (37/7, -1), q' = (9, -5)
 - p'' = (45/7, -4), q'' = (9, -5)
 - x(t) = x1 + (x2 - x1)t
@@ -169,7 +170,26 @@ Legyen h > 0, és ekkor (x, y, z) -1 és 1 között van => (hx, hy, hz) -h és h
 - ?
 
 ###### A Bresenham szakaszrajzoló algoritmusra teljesül-e, hogy a szakasz kezdő- és végpontját is visszaadja (beszínezi)?
+-------------------------------------------------------------------------------------------------------------------------
 - Igen.
 
 ###### Szükséges-e a Bresenham algoritmushoz lebegőpontos műveletek elvégzése?
+------------------------------------------------------------------------------
 - Nem, egészekkel számol.
+
+###### Bresenham algoritmus melyik síkrészre működött (első)? Hogy lett jó egész síkrészre?
+-------------------------------------------------------------------------------------------
+- |m| < 1
+- Nyolcadokra kéne bontanunk a síkot, és mindegyiket külön esetként kezelni.
+- |x2 - x1| < |y2 - y1| => x, y-t felcseréljük (rajzolásnál is).
+- Ha x1 > 2 => x1 <-> x2, y1 <-> y2.
+- e hibatagot |y2 - y1|-el növeljük.
+- Y-nál y2 - y1 előjele szerint haladunk.
+
+###### Háromszög: (1, 1), (9, 5), (5, 9) CCW. Oldalak irányvektorai, illetve normálisok? P pixel benne van-e a háromszög belsejében?
+-----------
+- (-4, -8), (8, 4), (-4, 4).
+- (8, -4), (-4, 8), (-4, -4).
+- A háromszög összes élére megnézzük, hogy a pontot a háromszög egy megfelelő pontjával összekötve a kapott szakasz, és a háromszög élének a vektoriális szorzata a normál irányába mutat-e.
+- Irányvektor: (x, y). Normálvektor: (y, -x).
+- Irányvektor pl. a szakaszhoz (AB). B - A (CCW miatt).
