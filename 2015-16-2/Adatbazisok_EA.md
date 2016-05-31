@@ -54,13 +54,10 @@ WITH RECURSIVE Eljut AS
 
 Tranzakciók ACID tulajdonságai
 ---------------------------------------------
-- Atomosság (atomicity): A tranzakció a feldolgozás atomi
-egysége; vagy teljes egészében végrehajtódik, vagy
-egyáltalán nem.
-- Konzisztenciamegőrzés (consistency preservation): Egy tranzakció konzisztenciamegőrző, ha teljes végrehajtása az adatbázist konzisztens állapotból konzisztens állapotba viszi át.
-- Elkülönítés (isolation): Egy tranzakciónak látszólag más tranzakcióktól elkülönítve kell végrehajtódnia. Ez azt jelenti, hogy a tranzakció végrehajtása nem állhat
-kölcsönhatásban semelyik másik konkurensen végrehajtott tranzakcióval sem.
-- Tartósság vagy állandóság (durability vagy permanency): Egy véglegesített tranzakció által az adatbázison véghezvitt módosításoknak meg kellőrződniük az adatbázisban. Ezeknek a módosításoknak semmilyen hiba miatt nem szabad elveszniük.
+- **Atomosság (atomicity):** A tranzakció a feldolgozás atomi egysége; vagy teljes egészében végrehajtódik, vagy egyáltalán nem.
+- **Konzisztenciamegőrzés (consistency):** a tranzakció futása után konzisztens legyen az adatbázis, megszorításokkal, triggerekkel biztosítjuk.
+- Elkülönítés (isolation): párhuzamos végrehajtás eredménye egymás utáni végrehajtással egyezzen meg.
+- Tartósság vagy állandóság (durability): a befejezett tranzakció eredménye rendszerhiba esetén sem veszhet el.
 
 Egyedhalmaz sémája és előfordulása?
 ---------------------------------------------------------------------
@@ -79,4 +76,65 @@ Erős és gyenge egyedhalmaz. E/K diagramban.
 ----------------------------------------------------------------
 - Gyenge: dupla téglalap
 - Erős: téglalap
-- Gyenge egyedhalmazok: Az egyedhalmazok kulcsában szereplő attribútumok közül néhány, vagy esetleg az összes, más egyedhalmaznak az attribútumai.
+- Gyenge egyedhalmazok: Az egyedhalmazok kulcsában szereplő attribútumok közül néhány, vagy esetleg az összes, más egyedhalmaznak az attribútumai. Emiatt nem tudjuk egyértelműen meghatározni, csak a kapcsolatokkal.
+- Erős: Amelyet egyértelműen tudunk azonosítani. Van azonosító jellegű tulajdonsága.
+
+Bináris kapcsolatok
+-----------
+- K(E1, E2)
+- sok-egy: K előfordulásaiban minden E1 beli egyedhez legfeljebb 1 E2 beli egyed tartozhat.
+- sok-sok: minden E1 beli egyedhez több E2 beli egyed tartozhat, és fordítva, minden E2 beli egyedhez több E1 beli egyed tartozhat.
+- sok-egy: minden E1 beli egyedhez legfeljebb egy E2 beli egyed tartozhat, és fordítva, minden E2 beli egyedhez legfeljebb egy E1 beli egyed tartozhat.
+![E-K](http://tanulnijo.uw.hu/adatbazis/ab_kepek/tobb_tobb_kapcs_pl.jpg)
+
+Alosztályok és az osztályhierarchia
+-----------------------------------
+- K(E1, E2)
+- is-a: az összes E1 beli egyed szerepel (speciális egy-egy)
+- jelölése: háromszögben "isa" a kettő között
+
+Az E/K diagram relációkká való átalakításának általános elvei.
+--------------------------------------------------------------
+- Egyedhalmazok átírásánál vizsgáljuk meg, ha összetett típusról van szó.
+- Többértékű attribútumoknál...
+-- egybe vesszük az egészet
+-- több sort veszünk fel egy táblába
+-- külön táblát veszünk fel
+
+| E/K modell               | Relációs adatmodell |
+|:-------------------------|:--------------------|
+| egyedhalmaz séma         | relációséma         |
+| tulajdonságok            | attribútumok        |
+| szuperkulcs              | szuperkulcs         |
+| egyedhalmaz előfordulása | reláció             |
+| egyed                    | sor                 |
+
+DML
+---
+- INSERT INTO <reláció> VALUES ( <konkrét értékek listája> );
+- vagy
+- INSERT INTO <reláció> ( <alkérdés> );
+- DELETE FROM <reláció> WHERE <feltétel>;
+- UPDATE <reláció> SET <attribútum értékadások listája> WHERE <sorokra vonatkozó feltétel>;
+
+Egyszerű, összetett kulcs
+-------------------------
+- Az egyszerű kulcs egyetlen attribútumból áll.
+- Az összetett kulcsot kettő vagy több oszlop kombinációja alkotja. 
+
+Hivatkozási épség megszorítás
+-----------------------------
+- REFERENCES Tábla(mező) Tábla készítésekor
+- A tábla egy oszlopában ha szerepel egy érték, akkor ennek B táblában is szerepelnie kell.
+
+Összetett kulcs példa
+---------------------
+``` sql
+CREATE TABLE Filmek (
+  cím VARCHAR(50)
+  , év INT
+  , hossz INT
+  , stúdió VARCHAR2
+  PRIMARY KEY (cím, év)
+  );
+```
