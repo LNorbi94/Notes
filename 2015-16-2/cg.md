@@ -1,3 +1,14 @@
+0. előadás
+----------
+
+###### Vektorműveletek
+----------------------
+- Összeadás (kivonás):
+ - a + b = [ax + bx, ay + by]
+- Skalárral szorzás:
+ - T * a (T != 0) = [T * ax, T * ay]
+- 
+
 7. előadás
 ----------
 
