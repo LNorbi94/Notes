@@ -37,14 +37,16 @@ SELECT DISTINCT owner FROM dba_objects WHERE object_type = 'TABLE' GROUP BY owne
 INTERSECT
 SELECT DISTINCT owner FROM dba_objects WHERE object_type = 'INDEX' GROUP BY owner HAVING COUNT(object_type) <= 37;
 
--- Melyek azok az objektum típusok, amelyek tényleges tárolást igényelnek, vagyis tartoznak hozzájuk adatblokkok? (A többinek csak a definíciója tárolódik adatszótárban)
+-- Melyek azok az objektum típusok, amelyek tényleges tárolást igényelnek, vagyis tartoznak hozzájuk adatblokkok?
+-- (A többinek csak a definíciója tárolódik adatszótárban)
 SELECT object_type FROM dba_objects WHERE data_object_id is not null GROUP BY object_type;
 
--- Melyek azok az objektum típusok, amelyek nem igényelnek tényleges tárolást, vagyis nem tartoznak hozzájuk adatblokkok? (Ezeknek csak a definíciója tárolódik adatszótárban)
+-- Melyek azok az objektum típusok, amelyek nem igényelnek tényleges tárolást, vagyis nem tartoznak hozzájuk adatblokkok?
+-- (Ezeknek csak a definíciója tárolódik adatszótárban)
 -- Az utóbbi két lekérdezés metszete nem üres.
 SELECT object_type FROM dba_objects WHERE data_object_id is null GROUP BY object_type;
 
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------
 -- DBA_TAB_COLUMNS
 
 -- Hány oszlopa van a nikovits.emp táblának?
@@ -58,7 +60,8 @@ SELECT owner, table_name, column_name FROM dba_tab_columns WHERE column_name LIK
 
 -- Adjuk meg azoknak a tábláknak a nevét, amelyeknek legalább 8 darab dátum tipusú oszlopa van.
 SELECT * FROM 
-(SELECT DISTINCT owner, table_name, COUNT(data_type) dcount FROM dba_tab_columns WHERE data_type = 'DATE' GROUP BY owner, table_name, data_type)
+(SELECT DISTINCT owner, table_name, COUNT(data_type) dcount FROM dba_tab_columns
+ WHERE data_type = 'DATE' GROUP BY owner, table_name, data_type)
 WHERE dcount >= 8;
 
 -- Adjuk meg azoknak a tábláknak a nevét, amelyeknek 1. es 4. oszlopa is VARCHAR2 tipusú.
@@ -66,7 +69,8 @@ SELECT DISTINCT table_name FROM dba_tab_columns WHERE column_id = 1 AND data_typ
 INTERSECT
 SELECT DISTINCT table_name FROM dba_tab_columns WHERE column_id = 4 AND data_type = 'VARCHAR2';
 
--- Írjunk meg egy plsql procedúrát, amelyik a paraméterül kapott karakterlánc alapján kiírja azoknak a tábláknak a nevét és tulajdonosát, amelyek az adott karakterlánccal kezdődnek.
+-- Írjunk meg egy plsql procedúrát, amelyik a paraméterül kapott karakterlánc alapján kiírja azoknak
+-- a tábláknak a nevét és tulajdonosát, amelyek az adott karakterlánccal kezdődnek.
 CREATE OR REPLACE PROCEDURE tabla_kiiro(p_kar VARCHAR2) IS
 BEGIN
    FOR v_tables IN (SELECT owner, table_name FROM dba_tab_columns WHERE table_name LIKE upper(p_kar) || '%') LOOP
