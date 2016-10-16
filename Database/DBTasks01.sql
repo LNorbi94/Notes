@@ -69,7 +69,7 @@ WHERE data_type = 'DATE'
 GROUP BY owner, table_name HAVING count(*) >= 8;
 
 -- Hasznos ilyenkor:
-DESCRIBE SH.TIMES;
+-- DESCRIBE SH.TIMES;
 
 -- Adjuk meg azoknak a tábláknak a nevét, amelyeknek 1. es 4. oszlopa is VARCHAR2 tipusú.
 SELECT DISTINCT table_name FROM dba_tab_columns WHERE column_id = 1 AND data_type = 'VARCHAR2'
