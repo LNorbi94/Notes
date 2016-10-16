@@ -63,6 +63,13 @@ SELECT * FROM
 (SELECT DISTINCT owner, table_name, COUNT(data_type) dcount FROM dba_tab_columns
  WHERE data_type = 'DATE' GROUP BY owner, table_name, data_type)
 WHERE dcount >= 8;
+-- Alternatív megoldás:
+SELECT owner, table_name FROM dba_tab_columns
+WHERE data_type = 'DATE'
+GROUP BY owner, table_name HAVING count(*) >= 8;
+
+-- Hasznos ilyenkor:
+DESCRIBE SH.TIMES;
 
 -- Adjuk meg azoknak a tábláknak a nevét, amelyeknek 1. es 4. oszlopa is VARCHAR2 tipusú.
 SELECT DISTINCT table_name FROM dba_tab_columns WHERE column_id = 1 AND data_type = 'VARCHAR2'
@@ -76,6 +83,21 @@ BEGIN
    FOR v_tables IN (SELECT owner, table_name FROM dba_tab_columns WHERE table_name LIKE upper(p_kar) || '%') LOOP
    dbms_output.put_line('Tulajdonos: ' || v_tables.owner || ' , Tábla neve: ' || v_tables.table_name);
    END LOOP;
+END;
+/
+
+-- Alternatív megoldás:
+CREATE OR REPLACE PROCEDURE tabla_kiiro(p_kar VARCHAR2) is
+  CURSOR curs1 IS SELECT owner, table_name FROM dba_tables WHERE upper(table_name) LIKE upper(p_kar) || '%';
+  rec curs1%ROWTYPE;
+BEGIN
+  OPEN curs1;
+  LOOP
+    FETCH curs1 INTO rec;
+    EXIT WHEN curs1%NOTFOUND;
+    dbms_output.put_line(rec.owner || ' - ' || rec.table_name);
+  END LOOP;
+  CLOSE curs1;
 END;
 /
 
