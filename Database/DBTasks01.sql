@@ -69,7 +69,7 @@ WHERE data_type = 'DATE'
 GROUP BY owner, table_name HAVING count(*) >= 8;
 
 -- Hasznos ilyenkor:
--- DESCRIBE SH.TIMES;
+DESCRIBE SH.TIMES;
 
 -- Adjuk meg azoknak a tábláknak a nevét, amelyeknek 1. es 4. oszlopa is VARCHAR2 tipusú.
 SELECT DISTINCT table_name FROM dba_tab_columns WHERE column_id = 1 AND data_type = 'VARCHAR2'
@@ -87,19 +87,7 @@ END;
 /
 
 -- Alternatív megoldás:
-CREATE OR REPLACE PROCEDURE tabla_kiiro(p_kar VARCHAR2) is
-  CURSOR curs1 IS SELECT owner, table_name FROM dba_tables WHERE upper(table_name) LIKE upper(p_kar) || '%';
-  rec curs1%ROWTYPE;
-BEGIN
-  OPEN curs1;
-  LOOP
-    FETCH curs1 INTO rec;
-    EXIT WHEN curs1%NOTFOUND;
-    dbms_output.put_line(rec.owner || ' - ' || rec.table_name);
-  END LOOP;
-  CLOSE curs1;
-END;
-/
+
 
 set serveroutput on;
 call tabla_kiiro('z');
