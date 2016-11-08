@@ -4,7 +4,8 @@ FROM dba_segments
 NATURAL JOIN
 (SELECT partition_name p, bytes
 FROM dba_segments WHERE upper(segment_type) = 'TABLE SUBPARTITION')
-WHERE partition_name is not null AND upper(segment_type) = 'TABLE PARTITION') GROUP BY partition_name ORDER BY sm_bytes DESC) WHERE rownum < 4;
+WHERE partition_name is not null AND upper(segment_type) = 'TABLE PARTITION') GROUP BY partition_name ORDER BY sm_bytes DESC)
+WHERE rownum < 4;
 
 -- 2. feladat
 SELECT * FROM
