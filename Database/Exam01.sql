@@ -26,3 +26,19 @@ BEGIN
    END LOOP;
 END;
 /
+
+
+-- Nikovits megoldása
+
+-- 5. feladat
+SELECT * FROM
+  (SELECT owner, segment_name, SUM(bytes) FROM dba_segments
+  WHERE segment_type LIKE 'TABLE%PARTITION'
+  GROUP BY owner, segment_name
+  ORDER BY SUM(bytes) DESC) WHERE rownum < 4;
+  
+-- 6. feladat
+SELECT table_name FROM dba_tab_columns c WHERE owner = 'NIKOVITS' AND data_type = 'DATE' AND column_id =
+ ( SELECT max(column_id) - 1 FROM dba_tab_columns WHERE owner = 'NIKOVITS' AND table_name = c.table_name);
+ 
+ -- 7. feladat
