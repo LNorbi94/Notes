@@ -52,6 +52,3 @@ select sum(masodperc) from hivas_v2 where datum = to_date('2012.01.31', 'yyyy.mm
 select count(*) from nikovits.hivas_v2;
 
 select * from dba_objects where object_type = 'TABLE' AND object_name LIKE 'HIVAS%';
-
--- 8. feladat
-SELECT /*+ HASH JOIN */ * FROM sh.countries co, sh.customers cu where co.country_id = cu.country_id;
