@@ -48,3 +48,14 @@ sh.countries cu join sh.customers co on cu.country_id = co.country_id WHERE CUST
 --            BITMAP INDEX + SINGLE VALUE + CUSTOMERS_YOB_BIX
 SELECT /*+ INDEX_COMBINE(co CUSTOMERS_YOB_BIX) USE_HASH(co cu) */ country_name FROM
 sh.countries cu join sh.customers co on cu.country_id = co.country_id WHERE CUST_YEAR_OF_BIRTH in (1, 10) GROUP BY country_name;
+
+-- SELECT STATEMENT +  +
+--  SORT + ORDER BY +
+--    TABLE ACCESS + BY INDEX ROWID + CUSTOMERS
+--      BITMAP CONVERSION + TO ROWIDS +
+--        BITMAP AND +  +
+--          BITMAP INDEX + SINGLE VALUE + CUSTOMERS_MARITAL_BIX
+--          BITMAP OR +  +
+--            BITMAP INDEX + SINGLE VALUE + CUSTOMERS_YOB_BIX
+--            BITMAP INDEX + SINGLE VALUE + CUSTOMERS_YOB_BIX
+--            BITMAP INDEX + SINGLE VALUE + CUSTOMERS_YOB_BIX
