@@ -59,3 +59,17 @@ sh.countries cu join sh.customers co on cu.country_id = co.country_id WHERE CUST
 --            BITMAP INDEX + SINGLE VALUE + CUSTOMERS_YOB_BIX
 --            BITMAP INDEX + SINGLE VALUE + CUSTOMERS_YOB_BIX
 --            BITMAP INDEX + SINGLE VALUE + CUSTOMERS_YOB_BIX
+SELECT /*+ INDEX_COMBINE(co CUSTOMERS_YOB_BIX CUSTOMERS_MARITAL_BIX) USE_HASH(co cu) */ country_name FROM
+sh.countries cu join sh.customers co on cu.country_id = co.country_id
+WHERE CUST_MARITAL_STATUS = 'married' AND
+(CUST_YEAR_OF_BIRTH = 1 OR CUST_YEAR_OF_BIRTH = 10 OR CUST_YEAR_OF_BIRTH = 100) GROUP BY country_name;
+
+-- SELECT STATEMENT +  +
+--  HASH + GROUP BY +
+--    HASH JOIN +  +
+--      INLIST ITERATOR +  +
+--        TABLE ACCESS + BY INDEX ROWID + CUSTOMERS
+--          BITMAP CONVERSION + TO ROWIDS +
+--            BITMAP INDEX + SINGLE VALUE + CUSTOMERS_YOB_BIX
+--      PARTITION RANGE + ALL +
+--        TABLE ACCESS + FULL + SALES
