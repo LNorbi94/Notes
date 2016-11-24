@@ -35,8 +35,8 @@ sh.countries cu join sh.customers co on cu.country_id = co.country_id GROUP BY c
 --      TABLE ACCESS + BY INDEX ROWID + CUSTOMERS                        
 --        BITMAP CONVERSION + TO ROWIDS +                                
 --          BITMAP INDEX + SINGLE VALUE + CUSTOMERS_YOB_BIX
-SELECT /*+ INDEX_COMBINE(co) */ country_name, COUNT(*) FROM
-sh.countries cu join sh.customers co on cu.country_id = co.country_id GROUP BY country_name;
+SELECT /*+ INDEX_COMBINE(co CUSTOMERS_YOB_BIX) USE_HASH(co cu) */ country_name FROM
+sh.countries cu join sh.customers co on cu.country_id = co.country_id WHERE CUST_YEAR_OF_BIRTH = 10 GROUP BY country_name;
 
 -- SELECT STATEMENT +  +                                                  
 --  HASH + GROUP BY +                                                    
@@ -46,3 +46,5 @@ sh.countries cu join sh.customers co on cu.country_id = co.country_id GROUP BY c
 --        TABLE ACCESS + BY INDEX ROWID + CUSTOMERS                      
 --          BITMAP CONVERSION + TO ROWIDS +                              
 --            BITMAP INDEX + SINGLE VALUE + CUSTOMERS_YOB_BIX
+SELECT /*+ INDEX_COMBINE(co CUSTOMERS_YOB_BIX) USE_HASH(co cu) */ country_name FROM
+sh.countries cu join sh.customers co on cu.country_id = co.country_id WHERE CUST_YEAR_OF_BIRTH in (1, 10) GROUP BY country_name;
