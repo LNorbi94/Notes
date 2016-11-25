@@ -90,6 +90,8 @@ WHERE co.CUST_YEAR_OF_BIRTH in ( 1967, 1977 )
 --            BITMAP INDEX + SINGLE VALUE + CUSTOMERS_YOB_BIX
 --        PARTITION RANGE + ALL +
 --          TABLE ACCESS + FULL + SALES
+
+-- Nem jó.
 SELECT /*+ INDEX_COMBINE(co CUSTOMERS_YOB_BIX) NO_INDEX(sa) USE_HASH(pu co) */ cust_first_name
 FROM sh.PRODUCTS pu,
 (SELECT /*+ INDEX_COMBINE(co CUSTOMERS_YOB_BIX) USE_HASH(co sa) */ * FROM
@@ -107,3 +109,10 @@ WHERE CUST_YEAR_OF_BIRTH = 1967
 --            BITMAP CONVERSION + TO ROWIDS +
 --              BITMAP INDEX + SINGLE VALUE + SALES_TIME_BIX
 --        TABLE ACCESS + FULL + CHANNELS
+SELECT /*+ ORDERED */ cust_id, SUM(amount_sold) FROM sh.sales s
+  WHERE time_id = TO_DATE('1998.01.10', 'yyyy.mm.dd')
+AND NOT EXISTS
+  (SELECT * FROM sh.channels c WHERE channel_desc = 'Internet'
+  AND s.channel_id = c.channel_id)
+GROUP BY cust_id
+  ORDER BY 2;
