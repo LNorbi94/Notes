@@ -90,15 +90,7 @@ WHERE co.CUST_YEAR_OF_BIRTH in ( 1967, 1977 )
 --            BITMAP INDEX + SINGLE VALUE + CUSTOMERS_YOB_BIX
 --        PARTITION RANGE + ALL +
 --          TABLE ACCESS + FULL + SALES
-
--- Nem jó.
-SELECT /*+ INDEX_COMBINE(co CUSTOMERS_YOB_BIX) NO_INDEX(sa) USE_HASH(pu co) */ cust_first_name
-FROM sh.PRODUCTS pu,
-(SELECT /*+ INDEX_COMBINE(co CUSTOMERS_YOB_BIX) USE_HASH(co sa) */ * FROM
-sh.sales sa, sh.customers co where sa.cust_id = co.cust_id)
-WHERE CUST_YEAR_OF_BIRTH = 1967
- GROUP BY cust_first_name
- ORDER BY cust_first_name;
+SELECT COUNT(*) FROM sh.products natural join sh.customers natural join sh.sales WHERE cust_year_of_birth = 1976;
 
 -- SELECT STATEMENT +  +
 --  SORT + ORDER BY +
