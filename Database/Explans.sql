@@ -18,7 +18,7 @@ SELECT /*+ use_nl(co, cu) */ * FROM sh.countries cu join sh.customers co on cu.c
 --      INDEX + FULL SCAN + COUNTRIES_PK                                 
 --    SORT + JOIN +                                                      
 --      TABLE ACCESS + FULL + CUSTOMERS
-SELECT /*+ USE_MERGE(cu, co) INDEX(cu) */ * FROM sh.countries cu join sh.customers co on cu.country_id = co.country_id;
+SELECT /*+ USE_MERGE(co cu) */* FROM sh.customers cu join sh.countries co on cu.country_id = co.country_id;
 
 -- SELECT STATEMENT +  +                              
 --  HASH + GROUP BY +                                
