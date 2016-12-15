@@ -32,7 +32,12 @@
 - Mit jelent az, hogy egy ütemezés konfliktus-sorbarendezhető?
  - hogy konfliktusekvivalens valamely soros ütemezéssel.
 - Mi az a megelőzési gráf és hogyan épül fel?
+ - 
 - Mit állíthatunk konzisztens, kétfázisú tranzakciók jogszerű ütemezéséről?
+ - Egy elemet vagy egyetlen tranzakció zárol kizárólagosan, vagy több is zárolhatja osztottan, de a kettő egyszerre nem lehet.
 - Igaz-e, hogy konzisztens tranzakciók jogszerű ütemezése konfliktus-sorbarendezhető? (ellenpélda)
+ - 
 - Igaz-e, hogy konzisztens, kétfázisú tranzakciók esetén nem alakulhat ki holtpont? (ellenpélda)
+ - 
 - Mi az a várakozási gráf és hogyan épül fel?
+ - 
