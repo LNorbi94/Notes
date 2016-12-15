@@ -32,7 +32,7 @@
 - Mit jelent az, hogy egy ütemezés konfliktus-sorbarendezhető?
  - hogy konfliktusekvivalens valamely soros ütemezéssel.
 - Mi az a megelőzési gráf és hogyan épül fel?
- - Igen.
+ - Ha a tranzakciókat Ti-vel jelöljük, akkor a Ti-nek megfelelő csúcsot az i egész jelöli. Az i csúcsból a j csúcsba akkor vezet irányított él, ha Ti \<S Tj.
 - Mit állíthatunk konzisztens, kétfázisú tranzakciók jogszerű ütemezéséről?
  - Egy elemet vagy egyetlen tranzakció zárol kizárólagosan, vagy több is zárolhatja osztottan, de a kettő egyszerre nem lehet.
 - Igaz-e, hogy konzisztens tranzakciók jogszerű ütemezése konfliktus-sorbarendezhető? (ellenpélda)
