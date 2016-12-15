@@ -28,7 +28,9 @@
  - Az összes piszkos puffer lemezre írása.
  - \<END CKPT\> + FLUSH LOG.
 - Mit jelent az, hogy két ütemezés konfliktus-ekvivalens?
+ - hogy a szomszédos műveletek nem konfliktusos cseréinek sorozatával az egyiket átalakíthatjuk a másikká.
 - Mit jelent az, hogy egy ütemezés konfliktus-sorbarendezhető?
+ - hogy konfliktusekvivalens valamely soros ütemezéssel.
 - Mi az a megelőzési gráf és hogyan épül fel?
 - Mit állíthatunk konzisztens, kétfázisú tranzakciók jogszerű ütemezéséről?
 - Igaz-e, hogy konzisztens tranzakciók jogszerű ütemezése konfliktus-sorbarendezhető? (ellenpélda)
