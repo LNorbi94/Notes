@@ -27,3 +27,10 @@
  - \<START CKPT(T1, T2, ... Tk)\> + FLUSH LOG.
  - Az összes piszkos puffer lemezre írása.
  - \<END CKPT\> + FLUSH LOG.
+- Mit jelent az, hogy két ütemezés konfliktus-ekvivalens?
+- Mit jelent az, hogy egy ütemezés konfliktus-sorbarendezhető?
+- Mi az a megelőzési gráf és hogyan épül fel?
+- Mit állíthatunk konzisztens, kétfázisú tranzakciók jogszerű ütemezéséről?
+- Igaz-e, hogy konzisztens tranzakciók jogszerű ütemezése konfliktus-sorbarendezhető? (ellenpélda)
+- Igaz-e, hogy konzisztens, kétfázisú tranzakciók esetén nem alakulhat ki holtpont? (ellenpélda)
+- Mi az a várakozási gráf és hogyan épül fel?
