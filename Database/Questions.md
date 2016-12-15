@@ -36,8 +36,8 @@
 - Mit állíthatunk konzisztens, kétfázisú tranzakciók jogszerű ütemezéséről?
  - Egy elemet vagy egyetlen tranzakció zárol kizárólagosan, vagy több is zárolhatja osztottan, de a kettő egyszerre nem lehet.
 - Igaz-e, hogy konzisztens tranzakciók jogszerű ütemezése konfliktus-sorbarendezhető? (ellenpélda)
- - 
+ - Nem. T1 írja A és Bt, T2 is. T1 módosítja A-t, T2 A-t majd B-t, majd T1 B-t.
 - Igaz-e, hogy konzisztens, kétfázisú tranzakciók esetén nem alakulhat ki holtpont? (ellenpélda)
  - 
 - Mi az a várakozási gráf és hogyan épül fel?
- - 
+ - Csúcsai a tranzakciók és akkor van él Ti-ből Tj-be, ha Ti vár egy olyan zár elengedésére, amit Tj tart éppen.
